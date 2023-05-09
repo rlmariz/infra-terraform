@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: repositoriodfe
+  labels:
+    app: repositoriodfe-app
+    service: repositoriodfe
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 50400
+      targetPort: 50400
+      protocol: TCP
+  selector:
+    service: repositoriodfe

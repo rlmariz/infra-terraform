@@ -1,0 +1,8 @@
+{
+  "files.exclude": {
+    "**/.terraform": true,
+    "**/.terraform.*": true,
+    "**/terraform.tfstate": true,
+    "**/terraform.tfstate.*": true
+  }
+}

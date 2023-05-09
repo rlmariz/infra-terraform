@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sql-server-2022-pv
+spec:
+  storageClassName: "sc-pd-balanced"
+  capacity:
+    storage: 30Gi
+  accessModes:
+    - ReadWriteOnce
+  claimRef:
+    namespace: default
+    name: sql-server-2022-pvc
+  csi:
+    driver: pd.csi.storage.gke.io
+    volumeHandle: projects/copper-site-237202/zones/southamerica-east1-a/disks/sqlserver-2022-pvc
+    #volumeHandle: projects/copper-site-237202/regions/southamerica-east1/disks/sqlserver-2022-pvc
+    fsType: ext4
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: default
+  name: sql-server-2022-pvc
+spec:
+  storageClassName: "sc-pd-balanced"
+  volumeName: sql-server-2022-pv
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 30Gi

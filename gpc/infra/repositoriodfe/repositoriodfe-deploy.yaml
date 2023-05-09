@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: repositoriodfe
+  labels:
+    app: repositoriodfe-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      service: repositoriodfe
+  template:
+    metadata:
+      labels:
+        app: repositoriodfe-app
+        service: repositoriodfe
+    spec:
+      containers:
+        - name: repositoriodfe
+          image: databelli/repositoriodfe
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 50400
+              protocol: TCP
+          env:
+            - name: "ASPNETCORE_ENVIRONMENT"
+              value: "Kubernetes"
+          volumeMounts:
+            - name: appsettings-repositoriodfe-volume
+              mountPath: /app/appsettings.json
+              subPath: appsettings.json              
+      volumes:
+        - name: appsettings-repositoriodfe-volume
+          configMap:
+            name: appsettings-repositoriodfe
